@@ -27,7 +27,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 module "postgres_sg" {
-  source      = "../modules/security_group"
+  source      = "./modules/security_group"
   name        = "postgres-sg"
   vpc_id      = aws_vpc.main.id
   port        = 5432

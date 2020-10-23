@@ -3,7 +3,7 @@
 ###################
 
 module "http_sg" {
-  source      = "../modules/security_group"
+  source      = "./modules/security_group"
   name        = "http-sg"
   vpc_id      = aws_vpc.main.id
   port        = 80
@@ -11,7 +11,7 @@ module "http_sg" {
 }
 
 module "https_sg" {
-  source      = "../modules/security_group"
+  source      = "./modules/security_group"
   name        = "https-sg"
   vpc_id      = aws_vpc.main.id
   port        = 443
@@ -19,7 +19,7 @@ module "https_sg" {
 }
 
 # module "http_redirect_sg" {
-#   source      = "../modules/security_group"
+#   source      = "./modules/security_group"
 #   name        = "http-redirect-sg"
 #   vpc_id      = aws_vpc.main.id
 #   port        = 8080
