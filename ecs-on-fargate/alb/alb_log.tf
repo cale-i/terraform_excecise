@@ -10,7 +10,7 @@ variable "bucket_account_id" {
 ##################################
 
 resource "aws_s3_bucket" "alb_log" {
-  bucket        = "alb-log-pragmatic-terraform-20201023"
+  bucket        = "${var.prefix}-alb-log-terraform-excercise"
   force_destroy = true
 
   # 180日経過したファイルを自動削除
