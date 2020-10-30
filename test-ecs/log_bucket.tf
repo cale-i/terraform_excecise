@@ -1,10 +1,3 @@
-variable "bucket_account_id" {
-  type = map
-  default = {
-    "ap-northeast-1" = "582318560864"
-  }
-}
-
 ##################################
 # Log Bucket
 ##################################
