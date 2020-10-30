@@ -39,7 +39,7 @@ resource "aws_ecs_service" "main" {
   launch_type   = "FARGATE"
 
   # LATESTは最新バージョンとは限らないため、明示的に指定すること
-  platform_version                  = "1.3.0"
+  platform_version                  = "1.4.0"
   health_check_grace_period_seconds = 60
 
   network_configuration {
