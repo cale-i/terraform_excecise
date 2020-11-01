@@ -44,11 +44,11 @@ resource "aws_ecs_service" "main" {
 
   network_configuration {
     assign_public_ip = true # public: true, private: false
-    security_groups  = [module.nginx_sg.security_group_id]
+    security_groups  = [module.webserver.security_group_id]
 
     subnets = [
-      aws_subnet.dmz_1a.id,
-      aws_subnet.dmz_1c.id,
+      aws_subnet.public_1a.id,
+      aws_subnet.public_1c.id,
     ]
   }
 
@@ -71,9 +71,9 @@ resource "aws_ecs_service" "main" {
 # ECS Security Group
 ##################################
 
-module "nginx_sg" {
+module "webserver" {
   source      = "./modules/security_group"
-  name        = "nginx-sg"
+  name        = "webserver"
   vpc_id      = aws_vpc.main.id
   port        = 80
   cidr_blocks = [aws_vpc.main.cidr_block]
