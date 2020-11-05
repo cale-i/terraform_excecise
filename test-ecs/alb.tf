@@ -64,7 +64,7 @@ resource "aws_lb_listener" "http" {
 
     fixed_response {
       content_type = "text/plain"
-      message_body = "THIS IS [HTTP]"
+      message_body = "OK"
       status_code  = "200"
     }
   }
@@ -86,7 +86,7 @@ resource "aws_lb_listener" "http" {
 
 #     fixed_response {
 #       content_type = "text/plain"
-#       message_body = "THIS IS [HTTPS]"
+#       message_body = "OK"
 #       status_code  = "200"
 #     }
 #   }
