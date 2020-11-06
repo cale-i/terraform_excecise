@@ -1,6 +1,7 @@
 FROM nginx:latest
 
 RUN apt update && apt install -y \
+    nginx \
     python3 \
     python3-pip \
     libpq-dev \
@@ -19,7 +20,17 @@ COPY ./backend/ /usr/src/code/
 
 RUN python3 manage.py makemigrations \
     && python3 manage.py migrate \
-    && python3 manage.py collectstatic
+    && python3 manage.py collectstatic --noinput
+# ENTRYPOINT [ "python3", "manage.py", "runserver", "0.0.0.0:80" ]
+ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:8000", "config.wsgi:application"]
 
-ENTRYPOINT [ "python3", "manage.py", "runserver", "0.0.0.0:80" ]
+# WORKDIR /etc/systemd/system
+
+# COPY ./gunicorn/gunicorn.servece .
+
+# RUN systemctl start gunicorn \
+#     && systemclt enable gunicorn
+
+
+
 EXPOSE 80
