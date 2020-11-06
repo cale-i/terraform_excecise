@@ -10,7 +10,7 @@ variable "prefix" {
 }
 
 variable "docker_dir" {
-  default = "../docker/"
+  default = "../"
 }
 
 
