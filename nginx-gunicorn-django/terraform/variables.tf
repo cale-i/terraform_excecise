@@ -13,7 +13,6 @@ variable "docker_dir" {
   default = "../"
 }
 
-
 variable "container_name" {
   default = "webserver"
 }

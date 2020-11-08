@@ -31,10 +31,3 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 ##################
 # REST Framework #
 ##################
-
-
-#####################
-# GOOGLE_ANALYTICS #
-#####################
-
-# GOOGLE_ANALYTICS_TRACKING_ID = 'UA-172422052-1'
