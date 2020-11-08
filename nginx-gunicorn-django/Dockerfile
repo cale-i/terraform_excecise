@@ -1,36 +1,31 @@
 FROM nginx:latest
 
 RUN apt update && apt install -y \
-    nginx \
     python3 \
     python3-pip \
     libpq-dev \
     # postgresql \
     # postgresql-contrib \
+    vim \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+
+WORKDIR /usr/src/app
+
+COPY ./backend/ /usr/src/app
+
 RUN python3 -m pip install --no-cache-dir --upgrade pip
 
-WORKDIR /usr/src/code
-
-COPY ./backend/requirements.txt .
 RUN pip3 install -r requirements.txt
-COPY ./backend/ /usr/src/code/
 
 RUN python3 manage.py makemigrations \
     && python3 manage.py migrate \
     && python3 manage.py collectstatic --noinput
-# ENTRYPOINT [ "python3", "manage.py", "runserver", "0.0.0.0:80" ]
-ENTRYPOINT [ "gunicorn", "--bind=0.0.0.0:8000", "config.wsgi:application"]
 
-# WORKDIR /etc/systemd/system
+RUN mkdir -p /var/run/gunicorn
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# COPY ./gunicorn/gunicorn.servece .
-
-# RUN systemctl start gunicorn \
-#     && systemclt enable gunicorn
-
-
+ENTRYPOINT [ "/usr/src/app/startup.sh" ]
 
 EXPOSE 80
