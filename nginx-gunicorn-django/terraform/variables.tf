@@ -10,7 +10,7 @@ variable "prefix" {
 }
 
 variable "docker_dir" {
-  default = "../"
+  default = "../backend/"
 }
 
 variable "container_name" {

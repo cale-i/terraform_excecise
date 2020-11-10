@@ -7,18 +7,29 @@ services:
     container_name: webserver
     ports:
       - "80:80"
+    depends_on:
+      - db
     
   db:
-    build: ./postgres/
-    # image: postgres
+    # build: ./postgres/
+    image: postgres:11.9-alpine
     container_name: postgres
     environment:
+      - "POSTGRES_USER=postgres"
       - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_DB=testdb"
       # - "DATABASE_HOST=db"
       # - "DATABASE_PORT=5432"
       # - "DATABASE_USER=postgres"
       # - "DATABASE_PASSWORD=mysecretpassword1234"
       # - "PGPASSWORD=mysecretpassword1234"
       # - "DATABASE_NAME=testdb"
+    
+    volumes:
+      - ./postgres/initdb:/docker-entrypoint-initdb.d
+    # command:
+      
+      # - echo "world"
+      
     ports:
       - "5432:5432"
