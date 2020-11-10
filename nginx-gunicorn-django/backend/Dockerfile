@@ -4,7 +4,7 @@ RUN apt update && apt install -y \
     python3 \
     python3-pip \
     libpq-dev \
-    # postgresql \
+    postgresql \
     # postgresql-contrib \
     vim \
     && apt clean \
@@ -13,7 +13,7 @@ RUN apt update && apt install -y \
 
 WORKDIR /usr/src/app
 
-COPY ./backend/ /usr/src/app
+COPY . /usr/src/app
 
 RUN python3 -m pip install --no-cache-dir --upgrade pip
 
