@@ -22,10 +22,17 @@ resource "aws_ecs_task_definition" "main" {
   container_definitions = templatefile(
     "./container_definitions.json",
     {
-      container_name  = var.container_name
-      ecr_repository  = "${aws_ecr_repository.webserver.repository_url}:${var.docker_image_tag}"
-      region          = var.region
-      postgresql_host = aws_db_instance.main.endpoint
+      container_name    = var.container_name
+      ecr_repository    = "${aws_ecr_repository.webserver.repository_url}:${var.docker_image_tag}"
+      region            = var.region
+      postgres_host     = aws_db_instance.main.endpoint
+      postgres_user     = "testuser"
+      postgres_password = "password"
+      postgres_db       = "testdb"
+      # postgres_host     = aws_db_instance.main.endpoint
+      # postgres_user     = aws_db_instance.main.username
+      # postgres_password = aws_db_instance.main.password
+      # postgres_db       = aws_db_instance.main.name
     }
   )
 
