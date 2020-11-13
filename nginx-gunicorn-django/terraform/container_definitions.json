@@ -17,6 +17,12 @@
                 "containerPort": 80,
                 "hostPort": 80
             }
+        ],
+        "environment": [
+            {
+                "name": "POSTGRESQL_HOST",
+                "value": "${postgresql_host}"
+            }
         ]
     }
 ]

@@ -19,13 +19,12 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip
 
 RUN pip3 install -r requirements.txt
 
-RUN python3 manage.py makemigrations \
-    && python3 manage.py migrate \
-    && python3 manage.py collectstatic --noinput
+# RUN python3 manage.py makemigrations \
+#     && python3 manage.py migrate \
+#     && python3 manage.py collectstatic --noinput
 
 RUN mkdir -p /var/run/gunicorn
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-ENTRYPOINT [ "/usr/src/app/startup.sh" ]
-
+ENTRYPOINT [ "/bin/bash", "/usr/src/app/startup.sh" ]
 EXPOSE 80

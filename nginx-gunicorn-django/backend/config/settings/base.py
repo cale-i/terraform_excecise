@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django_filters',
 
     # My Applications
-
+    'example.apps.ExampleConfig',
+    'apiv1.apps.Apiv1Config',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ############
 
 DATABASES = {}
-
 
 #######################
 # Password validation #

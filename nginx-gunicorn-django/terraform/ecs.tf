@@ -22,9 +22,10 @@ resource "aws_ecs_task_definition" "main" {
   container_definitions = templatefile(
     "./container_definitions.json",
     {
-      container_name = var.container_name
-      ecr_repository = "${aws_ecr_repository.webserver.repository_url}:${var.docker_image_tag}"
-      region         = var.region
+      container_name  = var.container_name
+      ecr_repository  = "${aws_ecr_repository.webserver.repository_url}:${var.docker_image_tag}"
+      region          = var.region
+      postgresql_host = aws_db_instance.main.endpoint
     }
   )
 
