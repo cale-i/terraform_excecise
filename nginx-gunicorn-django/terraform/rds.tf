@@ -17,9 +17,9 @@ resource "aws_db_parameter_group" "main" {
 
 resource "aws_ssm_parameter" "database_user" {
   name        = "/db/user"
-  value       = "dummyuser"
+  value       = "testuser"
   type        = "SecureString"
-  description = "ダミーユーザー"
+  description = "DBユーザー名"
 
   lifecycle {
     ignore_changes = [value]
@@ -30,6 +30,7 @@ resource "aws_ssm_parameter" "database_password" {
   value       = "dummypassword"
   type        = "SecureString"
   description = "ダミーパスワード"
+  # apply後にaws cli から変更
 
   lifecycle {
     ignore_changes = [value]
@@ -37,9 +38,9 @@ resource "aws_ssm_parameter" "database_password" {
 }
 resource "aws_ssm_parameter" "database_name" {
   name        = "/db/name"
-  value       = "dummyname"
+  value       = "testdb"
   type        = "SecureString"
-  description = "ダミーデータベース名"
+  description = "DBデータベース名"
 
   lifecycle {
     ignore_changes = [value]
@@ -111,10 +112,6 @@ resource "aws_db_instance" "main" {
   db_subnet_group_name   = aws_db_subnet_group.main.name
 
   lifecycle {
-    ignore_changes = [
-      name,
-      username,
-      password
-    ]
+    ignore_changes = [password]
   }
 }

@@ -38,21 +38,3 @@ resource "aws_ecr_lifecycle_policy" "main" {
     }
   EOF
 }
-###########################################
-# Push to ECR Repository when "terraform apply"
-###########################################
-
-resource "null_resource" "default" {
-  provisioner "local-exec" {
-    command = "aws ecr get-login-password --region ${var.region} | docker login --username AWS --password-stdin ${aws_ecr_repository.webserver.repository_url}"
-  }
-
-  provisioner "local-exec" {
-    command = "docker build -t ${aws_ecr_repository.webserver.repository_url}:${var.docker_image_tag} ${var.docker_dir}"
-  }
-
-  provisioner "local-exec" {
-    command = "docker push ${aws_ecr_repository.webserver.repository_url}"
-  }
-
-}
