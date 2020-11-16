@@ -10,7 +10,7 @@ services:
     environment:
       - "POSTGRES_USER=testuser"
       - "POSTGRES_PASSWORD=password"
-      - "POSTGRES_DB=testdb"
+      - "POSTGRES_NAME=testdb"
       - "POSTGRES_HOST=db"
     depends_on:
       - db

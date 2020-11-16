@@ -22,19 +22,22 @@
             {
                 "name": "POSTGRES_HOST",
                 "value": "${postgres_host}"
-            },
+            }
+        ],
+        "secrets": [
             {
                 "name": "POSTGRES_USER",
-                "value": "${postgres_user}"
+                "valueFrom": "/db/user"
             },
             {
                 "name": "POSTGRES_PASSWORD",
-                "value": "${postgres_password}"
+                "valueFrom": "/db/password"
             },
             {
-                "name": "POSTGRES_DB",
-                "value": "${postgres_db}"
+                "name": "POSTGRES_NAME",
+                "valueFrom": "/db/name"
             }
-        ]
+        ],
+        "command": ["/usr/bin/env"]
     }
 ]

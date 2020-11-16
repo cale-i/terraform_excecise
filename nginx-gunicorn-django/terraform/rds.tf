@@ -2,13 +2,51 @@
 # DB Parameter Group
 ##################################
 
-# MySQL
+
+
+
 # my.cnfに定義するDB設定は、DBパラメータグループに記述。
 resource "aws_db_parameter_group" "main" {
   name   = "postgres"
   family = "postgres11"
-
 }
+
+###########################
+# SSM Parameter data source
+###########################
+
+resource "aws_ssm_parameter" "database_user" {
+  name        = "/db/user"
+  value       = "dummyuser"
+  type        = "SecureString"
+  description = "ダミーユーザー"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+resource "aws_ssm_parameter" "database_password" {
+  name        = "/db/password"
+  value       = "dummypassword"
+  type        = "SecureString"
+  description = "ダミーパスワード"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+resource "aws_ssm_parameter" "database_name" {
+  name        = "/db/name"
+  value       = "dummyname"
+  type        = "SecureString"
+  description = "ダミーデータベース名"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
+
 
 ##################################
 # DB Subnet Group
@@ -50,13 +88,12 @@ resource "aws_db_instance" "main" {
   # kms keyは t2.microでは使用できない
   # storage_encrypted     = true
   # kms_key_id            = aws_kms_key.postgres.arn
-  name     = "testdb"
-  username = "testuser"
+  name     = aws_ssm_parameter.database_name.value
+  username = aws_ssm_parameter.database_user.value
 
   # 下記コマンドから初期パスワードの変更を行う
   # $ aws rds modify-db-instance --db-instance-identifier 'example' --master-user-password 'NewMasterPassword!'
-  #   password = "initial_password"
-  password = "password"
+  password = aws_ssm_parameter.database_password.value
 
   multi_az                   = false
   publicly_accessible        = false # false: vpc外からのアクセス遮断
@@ -74,6 +111,10 @@ resource "aws_db_instance" "main" {
   db_subnet_group_name   = aws_db_subnet_group.main.name
 
   lifecycle {
-    ignore_changes = [password]
+    ignore_changes = [
+      name,
+      username,
+      password
+    ]
   }
 }
