@@ -7,11 +7,11 @@ resource "null_resource" "ssm" {
     command = "echo ${aws_db_instance.main.identifier}"
   }
   provisioner "local-exec" {
-    command = "aws rds modify-db-instance --db-instance-identifier ${aws_db_instance.main.identifier} --master-user-password 'modifiedpassword'"
+    command = "aws rds modify-db-instance --db-instance-identifier ${aws_db_instance.main.identifier} --master-user-password ${var.db_password}"
   }
 
   provisioner "local-exec" {
-    command = "aws ssm put-parameter --name /db/password --type SecureString --value 'modifiedpassword' --overwrite"
+    command = "aws ssm put-parameter --name /db/password --type SecureString --value ${var.db_password} --overwrite"
   }
 
 }

@@ -31,6 +31,8 @@ variable "bucket_account_id" {
   }
 }
 
+variable "db_password" {}
+
 data "aws_caller_identity" "current" {}
 
 output "account_id" {
