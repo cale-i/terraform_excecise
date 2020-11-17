@@ -2,9 +2,6 @@
 # DB Parameter Group
 ##################################
 
-
-
-
 # my.cnfに定義するDB設定は、DBパラメータグループに記述。
 resource "aws_db_parameter_group" "main" {
   name   = "postgres"
@@ -61,7 +58,7 @@ resource "aws_db_subnet_group" "main" {
   ]
 
   tags = {
-    Name = "${var.prefix}"
+    Name = var.prefix
   }
 }
 
