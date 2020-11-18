@@ -5,9 +5,9 @@
 # Security Group for ALB
 ###################
 
-module "http_sg" {
+module "alb_sg" {
   source      = "./modules/security_group"
-  name        = "http-sg"
+  name        = "alb-sg"
   vpc_id      = aws_vpc.main.id
   port        = 80
   cidr_blocks = ["0.0.0.0/0"]
@@ -45,9 +45,9 @@ resource "aws_lb" "main" {
   }
 
   security_groups = [
-    module.http_sg.security_group_id,
+    module.alb_sg.security_group_id,
     # HTTPS時コメントアウト外す
-    # module.https_sg.security_group_id, 
+    # module.https_sg.alb_sgy_group_id, 
   ]
 }
 ###################

@@ -83,9 +83,9 @@ resource "aws_ecs_service" "main" {
 # ECS Security Group
 ##################################
 
-module "webserver" {
+module "webserver-sg" {
   source      = "./modules/security_group"
-  name        = "webserver"
+  name        = "webserver-sg"
   vpc_id      = aws_vpc.main.id
   port        = 80
   cidr_blocks = [aws_vpc.main.cidr_block]
