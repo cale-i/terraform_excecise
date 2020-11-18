@@ -62,6 +62,10 @@ resource "aws_internet_gateway" "main" {
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.prefix}-public"
+  }
 }
 
 resource "aws_route" "public" {
@@ -110,54 +114,20 @@ resource "aws_subnet" "private_1c" {
   }
 }
 
-resource "aws_eip" "nat_gateway_1a" {
-  vpc        = true
-  depends_on = [aws_internet_gateway.main]
-}
-
-resource "aws_eip" "nat_gateway_1c" {
-  vpc        = true
-  depends_on = [aws_internet_gateway.main]
-}
-
-resource "aws_nat_gateway" "nat_gateway_1a" {
-  allocation_id = aws_eip.nat_gateway_1a.id
-  subnet_id     = aws_subnet.public_1a.id
-  depends_on    = [aws_internet_gateway.main]
-}
-
-resource "aws_nat_gateway" "nat_gateway_1c" {
-  allocation_id = aws_eip.nat_gateway_1c.id
-  subnet_id     = aws_subnet.public_1c.id
-  depends_on    = [aws_internet_gateway.main]
-}
-
-resource "aws_route_table" "private_1a" {
+resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
-}
 
-resource "aws_route_table" "private_1c" {
-  vpc_id = aws_vpc.main.id
-}
-
-resource "aws_route" "private_1a" {
-  route_table_id         = aws_route_table.private_1a.id
-  nat_gateway_id         = aws_nat_gateway.nat_gateway_1a.id
-  destination_cidr_block = "0.0.0.0/0"
-}
-
-resource "aws_route" "private_1c" {
-  route_table_id         = aws_route_table.private_1c.id
-  nat_gateway_id         = aws_nat_gateway.nat_gateway_1c.id
-  destination_cidr_block = "0.0.0.0/0"
+  tags = {
+    Name = "${var.prefix}-private"
+  }
 }
 
 resource "aws_route_table_association" "private_1a" {
   subnet_id      = aws_subnet.private_1a.id
-  route_table_id = aws_route_table.private_1a.id
+  route_table_id = aws_route_table.private.id
 }
 
 resource "aws_route_table_association" "private_1c" {
   subnet_id      = aws_subnet.private_1c.id
-  route_table_id = aws_route_table.private_1c.id
+  route_table_id = aws_route_table.private.id
 }
