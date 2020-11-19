@@ -4,6 +4,9 @@ ALTER ROLE testuser SET default_transaction_isolation TO 'read committed';
 ALTER ROLE testuser SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE testdb TO testuser;
 
+-- for test
+ALTER USER testuser CREATEDB;
+
 CREATE TABLE test(
         id integer UNIQUE,
         name varchar(10)
